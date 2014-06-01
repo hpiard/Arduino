@@ -1,6 +1,6 @@
 __author__ = 'hpiard'
 import pyfirmata
-import time
+import time, thread
 
 # Pin definitions (digital pins
 PIN13 = 13          # Pin 13 is used
@@ -24,41 +24,44 @@ PORT = '/dev/ttyACM0'
 board = pyfirmata.Arduino(PORT)
 print(board)
 
-
-
-# Loop for blinking the led
-def blink_LED_forever():
+# Function for green LED
+def green_led():
     counter_PIN13 = 0
-    counter_PIN12 = 0
+
     while True:
-        board.digital[PIN13].write(1) # Set the LED pin to 1 (HIGH)
+        board.digital[PIN13].write(1)   # Set the LED pin to 1 (HIGH)
         board.pass_time(DELAY_1_SEC)
         read_pin13 = board.digital[PIN13].read()
         #print(read_pin13)
-        board.digital[PIN13].write(0) # Set the LED pin to 0 (LOW)
+        board.digital[PIN13].write(0)   # Set the LED pin to 0 (LOW)
         board.pass_time(DELAY_1_SEC)
         counter_PIN13 += read_pin13
         print 'Counter of PIN 13 is at position ' + str(counter_PIN13)
 
         if counter_PIN13 == 3:
-            while True:
-                board.digital[PIN12].write(1) # Set the LED pin to 1 (HIGH)
-                board.pass_time(DELAY_1_SEC)
-                read_pin12 = board.digital[PIN12].read()
-                board.digital[PIN12].write(0) # Set the LED pin to 0 (LOW)
-                board.pass_time(DELAY_1_SEC)
-                counter_PIN12 += read_pin12
-                print 'Counter of PIN 12 is at position ' + str(counter_PIN12)
-                if counter_PIN12 == 5:
-                    blink_LED_forever()
-                else:
-                    True
-        else:
-            True
+            red_led()
+            break
+
+# Function for red LED
+def red_led():
+    counter_PIN12 = 0
+    while True:
+        board.digital[PIN12].write(1)   # Set the LED pin to 1 (HIGH)
+        board.pass_time(DELAY_1_SEC)
+        read_pin12 = board.digital[PIN12].read()
+        board.digital[PIN12].write(0)   # Set the LED pin to 0 (LOW)
+        board.pass_time(DELAY_1_SEC)
+        counter_PIN12 += read_pin12
+        print 'Counter of PIN 12 is at position ' + str(counter_PIN12)
+        if counter_PIN12 == 5:
+            green_led()
+            break
 
 def count_loop():
     loops = 0
     loops += 1
     print 'We are in loop #' + str(loops)
 
-blink_LED_forever()
+if __main__ == "__main__":
+    lock = thread.allocate_lock()
+    thread.start_new_thread(green_led, ("Thread #: 1", 2, lock))
