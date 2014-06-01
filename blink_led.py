@@ -65,4 +65,4 @@ def count_loop():
 
 if __main__ == "__main__":
     lock = thread.allocate_lock()
-    thread.start_new_thread(green_led, ("Thread #: 1", 2, lock))
+    thread.start_new_thread(green_led(), ("Thread #: 1", 2, lock))
