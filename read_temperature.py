@@ -25,7 +25,7 @@ def calculate_celsius():
             analog_value = 0
         else:
             print 'Reading is: ' + str(analog_value) + ' | ',
-            celsius = (analog_value - 0.5) * 100 + 4.7 # 4.7 is just a guess since I don't have the 4.7k Ohm resistor
+            celsius = (analog_value - 0.5) * 100 + 4.7   # 4.7 is just a guess since I don't have the 4.7k Ohm resistor
             fahrenheit = celsius * (9.0/5.0) + 32.0
             #return celsius
             print 'Temperature in Celsius: ' + str(celsius) + ' | ',
@@ -33,4 +33,3 @@ def calculate_celsius():
             sleep(3)
 
 calculate_celsius()
-
