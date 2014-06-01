@@ -1,4 +1,5 @@
 __author__ = 'hpiard'
+__main__ = "__main__"
 import pyfirmata
 import time, thread
 
