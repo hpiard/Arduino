@@ -1,4 +1,6 @@
 __author__ = 'hpiard'
+
+#   This is a comment
 from pyfirmata import Arduino, util
 import pyfirmata
 from time import sleep
