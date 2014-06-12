@@ -89,3 +89,8 @@ body{
 /* multiple styles seperated by a , */
 #content,
 ul li a{ box-shadow: 0px 1px 1px #999; }
+
+#search-btn {
+    background: #21d6ff;
+    color: white;
+}
