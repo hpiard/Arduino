@@ -5,6 +5,7 @@ __main__ = "__main__"
 from pyfirmata import Arduino, util
 import pyfirmata
 from time import sleep
+import math
 
 #initialize board
 port = '/dev/ttyACM0'
@@ -20,11 +21,17 @@ def front_distance():
     while True:
         board.analog[ANALOG_0].enable_reporting()
         analog_value = board.analog[ANALOG_0].read()
+        #if analog_value == None:
+        #    analog_value = 0
+        #else:
         if analog_value == None:
-            analog_value = 0
-        else:
-            print 'Front distance is: ' + str(analog_value) + ' | ',
-            sleep(1)
+            analog_value = 1
+        distance = ((67870.0 / (analog_value - 3.0)) - 40.0)
+        print "============================================"
+        print "Front distance is: " + str(analog_value)
+        print "Calculated Distance:" + str(distance) + " cm"
+        print "============================================"
+        sleep(2)
 
 
 def rear_distance():
@@ -33,12 +40,19 @@ def rear_distance():
     while True:
         board.analog[ANALOG_1].enable_reporting()
         analog_value = board.analog[ANALOG_1].read()
+        #if analog_value == None:
+        #    analog_value = 0
+        #else:
         if analog_value == None:
-            analog_value = 0
-        else:
-            print 'Rear distance is: ' + str(analog_value)
-            sleep(1)
+            analog_value = 1
+        volts = analog_value * 0.0048828125
+        distance = 65*pow(volts, -1.10)
+        print "============================================"
+        print "Rear distance is: " + str(analog_value)
+        print "Calculated Distance:" + str(distance) + " cm"
+        print "============================================"
+        sleep(2)
 
 if __main__ == "__main__":
     front_distance()
-    rear_distance()
+    #rear_distance()
