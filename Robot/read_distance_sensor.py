@@ -1,6 +1,11 @@
 __author__ = 'hpiard'
 __main__ = "__main__"
 
+'''
+This web site helped me with the formula for sensor "Sharp 2YOA21":
+http://www.basicxandrobotics.com/additions/new%20sharp/index.html
+'''
+
 #   This is a comment
 from pyfirmata import Arduino, util
 import pyfirmata
