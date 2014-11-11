@@ -61,5 +61,5 @@ def rear_distance():
         sleep(2)
 
 if __main__ == "__main__":
-    Thread(target = front_distance).start()
-    Thread(target = rear_distance).start()
+    Thread(target=front_distance).start()
+    Thread(target=rear_distance).start()
