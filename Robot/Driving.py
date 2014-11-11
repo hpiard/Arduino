@@ -1,5 +1,11 @@
 __author__ = 'hpiard'
+__main__ = "__main__"
+import pyfirmata
 
+"""
+Analog Port 0 = Front Sensor --> front_sensor
+Analog Port 2 = Rear Sensor --> rear_sensor
+"""
 class Driving(object):
     def __init__(self, left_forward, left_backward, right_forward, right_backward):
         self.left_forward = left_forward
@@ -12,11 +18,21 @@ class Driving(object):
                                                              self.right_forward, self.right_backward)
 
 class Sensors(object):
-    def __init__(self, front_sensor, back_sensor):
-        self.front_sensor = left_sensor
-        self.back_sensor = back_sensor
+    def __init__(self, front_sensor, rear_sensor):
+        self.front_sensor = front_sensor
+        self.rear_sensor = rear_sensor
+
+    def read_sensors(self):
+        print "xxx"
 
 
 car = Driving("lfw", "lbw", "rfw", "rbw")
 
 car.output_in_text()
+
+# Define Port where board is attached to
+PORT = '/dev/ttyACM0'
+# Creates a new board
+board = pyfirmata.Arduino(PORT)
+#Firmata_version = get_firmata_version()
+print(board)

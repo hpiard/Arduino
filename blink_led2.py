@@ -1,7 +1,7 @@
 __author__ = 'hpiard'
 __main__ = "__main__"
 import pyfirmata
-import thread
+
 # Pin definitions (digital pins
 PIN13 = 13          # Pin 13 is used
 PIN12 = 12          # Pin 12 is used
