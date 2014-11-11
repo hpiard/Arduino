@@ -11,6 +11,7 @@ from pyfirmata import Arduino, util
 import pyfirmata
 from time import sleep
 import math
+from threading import Thread
 
 #initialize board
 port = '/dev/ttyACM1'
@@ -60,5 +61,5 @@ def rear_distance():
         sleep(2)
 
 if __main__ == "__main__":
-    front_distance()
-    rear_distance()
+    Thread(target = front_distance).start()
+    Thread(target = rear_distance).start()
