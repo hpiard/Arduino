@@ -24,6 +24,8 @@ def front_distance():
         #if analog_value == None:
         #    analog_value = 0
         #else:
+        print "\n"
+        print analog_value
         if analog_value == None:
             analog_value = 1
         distance = ((67870.0 / (analog_value - 3.0)) - 40.0)
@@ -43,6 +45,8 @@ def rear_distance():
         #if analog_value == None:
         #    analog_value = 0
         #else:
+        print "\n"
+        print analog_value
         if analog_value == None:
             analog_value = 1
         volts = analog_value * 0.0048828125
@@ -54,5 +58,5 @@ def rear_distance():
         sleep(2)
 
 if __main__ == "__main__":
-    front_distance()
-    #rear_distance()
+    #front_distance()
+    rear_distance()
