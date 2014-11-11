@@ -8,7 +8,7 @@ from time import sleep
 import math
 
 #initialize board
-port = '/dev/ttyACM0'
+port = '/dev/ttyACM1'
 board = pyfirmata.Arduino(port)
 #define analog ports
 ANALOG_0 = 0
@@ -25,10 +25,11 @@ def front_distance():
         #    analog_value = 0
         #else:
         print "\n"
-        print analog_value
-        if analog_value == None:
+        print "Actual reading: " + str(analog_value)
+        if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-        distance = ((67870.0 / (analog_value - 3.0)) - 40.0)
+        print "Calculated Reading: " + str(analog_value * 1024)
+        distance = (3027.4 / analog_value)pow(1.2134)
         print "============================================"
         print "Front distance is: " + str(analog_value)
         print "Calculated Distance:" + str(distance) + " cm"
@@ -46,11 +47,11 @@ def rear_distance():
         #    analog_value = 0
         #else:
         print "\n"
-        print analog_value
-        if analog_value == None:
+        print "Actual reading: " + str(analog_value)
+        if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-        volts = analog_value * 0.0048828125
-        distance = 65*pow(volts, -1.10)
+        print "Calculated Reading: " + str(analog_value * 1024)
+        distance = (3027.4 / analog_value)pow(1.2134)
         print "============================================"
         print "Rear distance is: " + str(analog_value)
         print "Calculated Distance:" + str(distance) + " cm"
