@@ -27,8 +27,8 @@ def front_distance():
     while True:
         board.analog[ANALOG_0].enable_reporting()
         analog_value = board.analog[ANALOG_0].read()
-        print "\n"
-        print "Actual reading: " + str(analog_value)
+        #print "\n"
+        #print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
@@ -47,8 +47,8 @@ def rear_distance():
     while True:
         board.analog[ANALOG_1].enable_reporting()
         analog_value = board.analog[ANALOG_1].read()
-        print "\n"
-        print "Actual reading: " + str(analog_value)
+        #print "\n"
+        #print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
