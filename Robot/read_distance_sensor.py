@@ -38,7 +38,7 @@ def front_distance():
         #print "Front distance is: " + str(analog_value)
         print "Calculated Front Distance:" + str(distance) + " cm"
         print "============================================"
-        sleep(2)
+        sleep(1)
 
 
 def rear_distance():
@@ -58,7 +58,7 @@ def rear_distance():
         #print "Rear distance is: " + str(analog_value)
         print "Calculated Rear Distance:" + str(distance) + " cm"
         print "============================================"
-        sleep(2)
+        sleep(1)
 
 if __main__ == "__main__":
     Thread(target=front_distance).start()
