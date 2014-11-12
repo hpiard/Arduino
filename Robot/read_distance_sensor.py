@@ -7,11 +7,12 @@ http://www.basicxandrobotics.com/additions/new%20sharp/index.html
 '''
 
 #   This is a comment
-from pyfirmata import Arduino, util
-import pyfirmata
 from time import sleep
-import math
 from threading import Thread
+
+from pyfirmata import util
+import pyfirmata
+
 
 #initialize board
 port = '/dev/ttyACM1'
@@ -34,10 +35,11 @@ def front_distance():
         #print "Calculated Reading: " + str(analog_value * 1024)
         x = (3027.4 / (analog_value*1024))
         distance = pow(x, 1.2134)
-        print "============================================"
+        #return pow(x, 1.2134)
+        #print "============================================"
         #print "Front distance is: " + str(analog_value)
         print "Calculated Front Distance:" + str(distance) + " cm"
-        print "============================================"
+        #print "============================================"
         sleep(1)
 
 
@@ -54,10 +56,11 @@ def rear_distance():
         #print "Calculated Reading: " + str(analog_value * 1024)
         y = (3027.4 / (analog_value*1024))
         distance = pow(y, 1.2134)
-        print "============================================"
+        #return pow(y, 1.2134)
+        #print "============================================"
         #print "Rear distance is: " + str(analog_value)
         print "Calculated Rear Distance:" + str(distance) + " cm"
-        print "============================================"
+        #print "============================================"
         sleep(1)
 
 if __main__ == "__main__":

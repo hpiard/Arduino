@@ -1,7 +1,8 @@
 __author__ = 'hpiard'
 __main__ = "__main__"
 import pyfirmata
-import read_distance_sensor
+from read_distance_sensor import rear_distance
+from read_distance_sensor import front_distance
 
 """
 Analog Port 0 = Front Sensor --> front_sensor
@@ -26,18 +27,15 @@ class Sensors(object):
     def read_sensors(self):
         print "xxx"
 
-
-car = Driving("lfw", "lbw", "rfw", "rbw")
-
-car.output_in_text()
-
+#car = Driving("lfw", "lbw", "rfw", "rbw")
+#car.output_in_text()
 # Define Port where board is attached to
-PORT = '/dev/ttyACM1'
+#PORT = '/dev/ttyACM1'
 # Creates a new board
-board = pyfirmata.Arduino(PORT)
+#board = pyfirmata.Arduino(PORT)
 #Firmata_version = get_firmata_version()
-print(board)
+#print(board)
 
-
-front_distance()
-rear_distance()
+if __main__ == "__main__":
+    front_distance()
+    rear_distance()
