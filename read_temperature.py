@@ -1,21 +1,12 @@
 __author__ = 'hpiard'
 
 #   This is a comment
-from pyfirmata import Arduino, util
-import pyfirmata
-from time import sleep
-import os
+#from pyfirmata import Arduino, util
+#import pyfirmata
+#from time import sleep
+#import os
 
-#initialize board
-port = '/dev/ttyACM0'
-board = pyfirmata.Arduino(port)
-#define analog ports
-ANALOG_0 = 0
-ANALOG_1 = 1
-ANALOG_2 = 2
-ANALOG_3 = 3
-ANALOG_4 = 4
-ANALOG_5 = 5
+
 
 def calculate_celsius():
     it = util.Iterator(board)
@@ -34,4 +25,12 @@ def calculate_celsius():
             print 'Temperature in Fahrenheit ' + str(fahrenheit)
             sleep(3)
 
-calculate_celsius()
+#calculate_celsius()
+
+
+def test():
+    for i in range(0, 1000, 50):
+        print i
+
+
+test()
