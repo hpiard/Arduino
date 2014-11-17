@@ -38,8 +38,9 @@ def front_distance():
         #return pow(x, 1.2134)
         #print "============================================"
         #print "Front distance is: " + str(analog_value)
-        print "Calculated Front Distance:" + str(distance) + " cm"
+        #print "Calculated Front Distance:" + str(distance) + " cm"
         #print "============================================"
+        print str(distance)
         sleep(1)
 
 
@@ -59,8 +60,9 @@ def rear_distance():
         #return pow(y, 1.2134)
         #print "============================================"
         #print "Rear distance is: " + str(analog_value)
-        print "Calculated Rear Distance:" + str(distance) + " cm"
+        #print "Calculated Rear Distance:" + str(distance) + " cm"
         #print "============================================"
+        print str(distance)
         sleep(1)
 
 if __main__ == "__main__":
