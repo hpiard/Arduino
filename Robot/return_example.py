@@ -2,11 +2,11 @@ __author__ = 'hpiard'
 __init__ = '__init__'
 
 from time import sleep
-
+from random import randint
 
 def g(x):
     while True:
-        y0 = x + 1
+        y0 = x
         y1 = x * 3
         y2 = y0 **3
         sleep(1)
@@ -15,5 +15,5 @@ def g(x):
 
 if __init__ == '__init__':
     while True:
-        a = g(7)
+        a = g(randint(400, 500))
         print a

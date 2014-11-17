@@ -14,6 +14,7 @@ board = pyfirmata.Arduino(port)
 
 
 def left_forward(on_off=0):
+    global on_off
     #it = util.Iterator(board)
     #it.start()
     pin9 = board.digital[9]
@@ -21,6 +22,7 @@ def left_forward(on_off=0):
 
 
 def left_backwards(on_off=0):
+    global on_off
     #it = util.Iterator(board)
     #it.start()
     pin6 = board.digital[6]
@@ -28,6 +30,7 @@ def left_backwards(on_off=0):
 
 
 def right_forward(on_off=0):
+    global on_off
     #it = util.Iterator(board)
     #it.start()
     pin3 = board.digital[3]
@@ -35,6 +38,7 @@ def right_forward(on_off=0):
 
 
 def right_backwards(on_off=0):
+    global on_off
     #it = util.Iterator(board)
     #it.start()
     pin5 = board.digital[5]
@@ -42,6 +46,7 @@ def right_backwards(on_off=0):
 
 
 def stop_car(on_off=0):
+    global on_off
     #it = util.Iterator(board)
     #it.start()
     pin9 = board.digital[9]
@@ -104,7 +109,7 @@ def driving():
 
 
 
-    '''
+'''
     while True:
         front = front_distance()
         print front
