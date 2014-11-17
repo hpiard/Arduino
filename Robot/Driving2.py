@@ -64,17 +64,16 @@ def front_distance():
         #print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-            #print "Calculated Reading: " + str(analog_value * 1024)
-            x = (3027.4 / (analog_value*1024))
-            distance = pow(x, 1.2134)
-            #return pow(x, 1.2134)
-            #print "============================================"
-            #print "Front distance is: " + str(analog_value)
-            #print "Calculated Front Distance:" + str(distance) + " cm"
-            #print "============================================"
-            print distance
-            #return distance
-            sleep(1)
+        #print "Calculated Reading: " + str(analog_value * 1024)
+        x = (3027.4 / (analog_value*1024))
+        distance = pow(x, 1.2134)
+        #return pow(x, 1.2134)
+        #print "============================================"
+        #print "Front distance is: " + str(analog_value)
+        #print "Calculated Front Distance:" + str(distance) + " cm"
+        #print "============================================"
+        print str(distance)
+        sleep(1)
 
 
 def rear_distance():
@@ -87,22 +86,23 @@ def rear_distance():
         #print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-            #print "Calculated Reading: " + str(analog_value * 1024)
-            y = (3027.4 / (analog_value*1024))
-            distance = pow(y, 1.2134)
-            #return pow(y, 1.2134)
-            #print "============================================"
-            #print "Rear distance is: " + str(analog_value)
-            #print "Calculated Rear Distance:" + str(distance) + " cm"
-            #print "============================================"
-            print distance
-            #return distance
-            sleep(1)
+        #print "Calculated Reading: " + str(analog_value * 1024)
+        y = (3027.4 / (analog_value*1024))
+        distance = pow(y, 1.2134)
+        #return pow(y, 1.2134)
+        #print "============================================"
+        #print "Rear distance is: " + str(analog_value)
+        #print "Calculated Rear Distance:" + str(distance) + " cm"
+        #print "============================================"
+        print str(distance)
+        sleep(1)
 
 
 def driving():
     Thread(target=front_distance).start()
     Thread(target=rear_distance).start()
+
+
 
     '''
     while True:
