@@ -15,5 +15,5 @@ def g(x):
 
 if __init__ == '__init__':
     while True:
-        a = g(78)
+        a = g(7)
         print a
