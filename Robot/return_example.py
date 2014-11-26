@@ -4,6 +4,7 @@ __init__ = '__init__'
 from time import sleep
 from random import randint
 
+
 def g(x):
     while True:
         y0 = x
