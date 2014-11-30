@@ -16,6 +16,20 @@ port = '/dev/tty.usbmodem1421'
 board = pyfirmata.Arduino(port)
 
 
+def drive_forward(on_off):
+    pin9 = board.digital[9]
+    pin9.write(on_off)
+    pin3 = board.digital[3]
+    pin3.write(on_off)
+
+
+def drive_backwards(on_off):
+    pin6 = board.digital[6]
+    pin6.write(on_off)
+    pin5 = board.digital[5]
+    pin5.write(on_off)
+
+
 def left_forward(on_off):
     pin9 = board.digital[9]
     pin9.write(on_off)
@@ -27,13 +41,11 @@ def left_backwards(on_off):
 
 
 def right_forward(on_off):
-
     pin3 = board.digital[3]
     pin3.write(on_off)
 
 
 def right_backwards(on_off):
-
     pin5 = board.digital[5]
     pin5.write(on_off)
 
@@ -82,11 +94,9 @@ def driving():
         print(space_front)
         #space_rear = rear_distance()
         if space_front >= 10.0:
-            left_forward(1)
-            right_forward(1)
+            drive_forward(1)
         else:
-            left_forward(0)
-            right_forward(0)
+            drive_forward(0)
         sleep(1)
 
 if __main__ == '__main__':
