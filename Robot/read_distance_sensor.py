@@ -72,3 +72,4 @@ def rear_distance():
 if __main__ == "__main__":
     Thread(target=front_distance).start()
     Thread(target=rear_distance).start()
+
