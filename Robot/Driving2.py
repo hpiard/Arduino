@@ -1,5 +1,5 @@
 __author__ = 'hpiard'
-__init__ = '__init__'
+__main__ = '__main__'
 
 import pyfirmata
 from pyfirmata import util
@@ -8,8 +8,8 @@ from threading import Thread
 
 ANALOG_0 = 0
 ANALOG_1 = 1
-distance_front = 1
-distance_rear = 1
+#distance_front = 1
+#distance_rear = 1
 on_off = 0
 
 port = '/dev/tty.usbmodem1421'
@@ -58,10 +58,10 @@ def front_distance():
         analog_value = 1
     x = (3027.4 / (analog_value*1024))
     distance_front = pow(x, 1.2134)
-    print (str(distance_front))
+    #print (str(distance_front))
     return distance_front
 
-
+'''
 def rear_distance():
     it = util.Iterator(board)
     it.start()
@@ -71,22 +71,23 @@ def rear_distance():
         analog_value = 1
     y = (3027.4 / (analog_value*1024))
     distance_rear = pow(y, 1.2134)
-    print (str(distance_rear))
+    #print (str(distance_rear))
     return distance_rear
-
+'''
 
 
 def driving():
     while True:
         space_front = front_distance()
+        print(space_front)
         #space_rear = rear_distance()
-        if space_front > 10.0:
+        if space_front >= 10.0:
             left_forward(1)
             right_forward(1)
-        elif space_front < 10.0:
+        else:
             left_forward(0)
             right_forward(0)
         sleep(1)
 
-if __init__ == '__init__':
+if __main__ == '__main__':
     driving()
