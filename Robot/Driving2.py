@@ -8,8 +8,10 @@ from threading import Thread
 
 ANALOG_0 = 0
 ANALOG_1 = 1
+distance_front = 1
+distance_rear = 1
 
-port = '/dev/ttyACM0'
+port = '/dev/tty.usbmodem1421'
 board = pyfirmata.Arduino(port)
 
 
@@ -59,6 +61,8 @@ def stop_car(on_off=0):
     pin3.write(on_off)
 
 
+
+
 def front_distance():
     it = util.Iterator(board)
     it.start()
@@ -71,13 +75,14 @@ def front_distance():
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
         x = (3027.4 / (analog_value*1024))
-        distance = pow(x, 1.2134)
+        global distance_front
+        distance_front = pow(x, 1.2134)
         #return pow(x, 1.2134)
         #print "============================================"
         #print "Front distance is: " + str(analog_value)
         #print "Calculated Front Distance:" + str(distance) + " cm"
         #print "============================================"
-        print str(distance)
+        print (str(distance_front))
         sleep(1)
 
 
@@ -93,13 +98,14 @@ def rear_distance():
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
         y = (3027.4 / (analog_value*1024))
-        distance = pow(y, 1.2134)
+        global distance_rear
+        distance_rear = pow(y, 1.2134)
         #return pow(y, 1.2134)
         #print "============================================"
         #print "Rear distance is: " + str(analog_value)
         #print "Calculated Rear Distance:" + str(distance) + " cm"
         #print "============================================"
-        print str(distance)
+        print (str(distance_rear))
         sleep(1)
 
 

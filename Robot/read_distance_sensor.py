@@ -2,6 +2,7 @@ __author__ = 'hpiard'
 __main__ = "__main__"
 
 '''
+You must run Python 3.4.2
 This web site helped me with the formula for sensor "Sharp 2YOA21":
 http://www.basicxandrobotics.com/additions/new%20sharp/index.html
 '''
@@ -15,12 +16,13 @@ import pyfirmata
 
 
 #initialize board
-port = '/dev/ttyACM0'
+port = '/dev/tty.usbmodem1421'
 board = pyfirmata.Arduino(port)
 #define analog ports
 ANALOG_0 = 0
 ANALOG_1 = 1
-
+distance_front = 1
+distance_rear = 1
 
 def front_distance():
     it = util.Iterator(board)
@@ -34,13 +36,14 @@ def front_distance():
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
         x = (3027.4 / (analog_value*1024))
-        distance = pow(x, 1.2134)
+        global distance_front
+        distance_front = pow(x, 1.2134)
         #return pow(x, 1.2134)
         #print "============================================"
         #print "Front distance is: " + str(analog_value)
         #print "Calculated Front Distance:" + str(distance) + " cm"
         #print "============================================"
-        print str(distance)
+        print (str(distance_front))
         sleep(1)
 
 
@@ -56,13 +59,14 @@ def rear_distance():
             analog_value = 1
         #print "Calculated Reading: " + str(analog_value * 1024)
         y = (3027.4 / (analog_value*1024))
-        distance = pow(y, 1.2134)
+        global distance_rear
+        distance_rear = pow(y, 1.2134)
         #return pow(y, 1.2134)
         #print "============================================"
         #print "Rear distance is: " + str(analog_value)
         #print "Calculated Rear Distance:" + str(distance) + " cm"
         #print "============================================"
-        print str(distance)
+        print (str(distance_rear))
         sleep(1)
 
 if __main__ == "__main__":
