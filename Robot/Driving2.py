@@ -10,7 +10,7 @@ ANALOG_0 = 0
 ANALOG_1 = 1
 #distance_front = 1
 #distance_rear = 1
-on_off = 0
+#on_off = 0
 
 port = '/dev/tty.usbmodem1421'
 board = pyfirmata.Arduino(port)
