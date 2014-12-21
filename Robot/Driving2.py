@@ -62,8 +62,8 @@ def stop_car(on_off=0):
 
 
 def front_distance():
-    it = util.Iterator(board)
-    it.start()
+    #it = util.Iterator(board)
+    #it.start()
     board.analog[ANALOG_0].enable_reporting()
     analog_value = board.analog[ANALOG_0].read()
     if analog_value == None or analog_value == 0 or analog_value == 0.0:
@@ -100,4 +100,6 @@ def driving():
         sleep(1)
 
 if __main__ == '__main__':
+    it = util.Iterator(board)
+    it.start()
     driving()
