@@ -16,7 +16,7 @@ import pyfirmata
 
 
 #initialize board
-port = '/dev/tty.usbmodem1421'
+port = '/dev/tty.usbmodem1461'
 board = pyfirmata.Arduino(port)
 #define analog ports
 ANALOG_0 = 0
