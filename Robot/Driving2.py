@@ -100,6 +100,7 @@ def driving():
         sleep(1)
 
 if __main__ == '__main__':
-    it = util.Iterator(board)
-    it.start()
-    driving()
+    while True:
+        it = util.Iterator(board)
+        it.start()
+        driving()
