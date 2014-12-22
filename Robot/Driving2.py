@@ -14,6 +14,10 @@ ANALOG_1 = 1
 
 port = '/dev/tty.usbmodem1461'
 board = pyfirmata.Arduino(port, baudrate=57600)
+print(' .......connecting to Board.... stay tuned....')
+print('Board connected: %s' % str(board.get_firmata_version()))
+it = util.Iterator(board)
+it.start()
 
 
 def drive_forward(on_off):
@@ -62,15 +66,15 @@ def stop_car(on_off=0):
 
 
 def front_distance():
-    #it = util.Iterator(board)
-    #it.start()
+    # it = util.Iterator(board)
+    # it.start()
     board.analog[ANALOG_0].enable_reporting()
     analog_value = board.analog[ANALOG_0].read()
     if analog_value == None or analog_value == 0 or analog_value == 0.0:
         analog_value = 1
     x = (3027.4 / (analog_value*1024))
     distance_front = pow(x, 1.244)
-    #print (str(distance_front))
+    # print (str(distance_front))
     return distance_front
 
 '''
@@ -83,7 +87,7 @@ def rear_distance():
         analog_value = 1
     y = (3027.4 / (analog_value*1024))
     distance_rear = pow(y, 1.244)
-    #print (str(distance_rear))
+    # print (str(distance_rear))
     return distance_rear
 '''
 
@@ -92,15 +96,15 @@ def driving():
     while True:
         space_front = front_distance()
         print(space_front)
-        #space_rear = rear_distance()
+        # space_rear = rear_distance()
         if space_front >= 10.0:
             drive_forward(1)
         else:
             drive_forward(0)
-        sleep(1)
+        board.pass_time(1)
 
 if __main__ == '__main__':
+    # it = util.Iterator(board)
+    # it.start()
     while True:
-        it = util.Iterator(board)
-        it.start()
         driving()
