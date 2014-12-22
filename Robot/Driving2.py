@@ -93,11 +93,14 @@ def rear_distance():
 
 
 def driving():
+    iteration = 0
     while True:
         space_front = front_distance()
+        iteration += 1
+        print(iteration)
         print(space_front)
         # space_rear = rear_distance()
-        if space_front >= 15.0:
+        if space_front >= 30.0:
             drive_forward(1)
         else:
             drive_forward(0)
