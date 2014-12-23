@@ -18,7 +18,14 @@ import pyfirmata
 #initialize board
 port = '/dev/tty.usbmodem1461'
 board = pyfirmata.Arduino(port)
-#define analog ports
+print('....warming up your Arduino Board..... stay tuned....')
+print('This Board runs Firmware: %s' % str(board.get_firmata_version()))
+
+# start iterator as recommended per Pyfirmata recommendation
+it = util.Iterator(board)
+it.start()
+
+# define analog ports
 ANALOG_0 = 0
 ANALOG_1 = 1
 distance_front = 1
@@ -26,47 +33,43 @@ distance_rear = 1
 
 
 def front_distance():
-    it = util.Iterator(board)
-    it.start()
     while True:
         board.analog[ANALOG_0].enable_reporting()
         analog_value = board.analog[ANALOG_0].read()
-        #print "\n"
-        #print "Actual reading: " + str(analog_value)
+        # print "\n"
+        # print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-        #print "Calculated Reading: " + str(analog_value * 1024)
+        # print "Calculated Reading: " + str(analog_value * 1024)
         x = (3027.4 / (analog_value*1024))
         global distance_front
         distance_front = pow(x, 1.2134)
-        #return pow(x, 1.2134)
-        #print "============================================"
-        #print "Front distance is: " + str(analog_value)
-        #print "Calculated Front Distance:" + str(distance) + " cm"
-        #print "============================================"
+        # return pow(x, 1.2134)
+        # print "============================================"
+        # print "Front distance is: " + str(analog_value)
+        # print "Calculated Front Distance:" + str(distance) + " cm"
+        # print "============================================"
         print (str(distance_front))
         sleep(1)
 
 
 def rear_distance():
-    it = util.Iterator(board)
-    it.start()
     while True:
         board.analog[ANALOG_1].enable_reporting()
         analog_value = board.analog[ANALOG_1].read()
-        #print "\n"
-        #print "Actual reading: " + str(analog_value)
+        # print "\n"
+        # print "Actual reading: " + str(analog_value)
         if analog_value == None or analog_value == 0 or analog_value == 0.0:
             analog_value = 1
-        #print "Calculated Reading: " + str(analog_value * 1024)
+        # print "Calculated Reading: " + str(analog_value * 1024)
         y = (3027.4 / (analog_value*1024))
         global distance_rear
         distance_rear = pow(y, 1.2134)
-        #return pow(y, 1.2134)
-        #print "============================================"
-        #print "Rear distance is: " + str(analog_value)
-        #print "Calculated Rear Distance:" + str(distance) + " cm"
-        #print "============================================"
+        # return pow(y, 1.2134)
+        # print "============================================"
+        # print "Rear distance is: " + str(analog_value)
+        # print "Calculated Rear Distance:" + str(distance) + " cm"
+        # print "============================================"
         print (str(distance_rear))
         sleep(1)
 

@@ -1,83 +1,51 @@
-__author__ = 'hpiard'
-__main__ = '__main__'
-
-import pyfirmata
-from pyfirmata import util
+from nanpy import ArduinoApi
+from nanpy import SerialManager
 from time import sleep
-from threading import Thread
+from time import time
 
-ANALOG_0 = 0
-ANALOG_1 = 1
-#distance_front = 1
-#distance_rear = 1
-#on_off = 0
+connection = SerialManager()
+a = ArduinoApi(connection=connection)
 
-port = '/dev/tty.usbmodem1461'
-board = pyfirmata.Arduino(port, baudrate=57600)
+trig = 13
+echo = 12
+ledrouge = 11
+ledbleu = 10
 
+a.pinMode(trig, a.OUTPUT)
+a.pinMode(echo, a.INPUT)
+a.pinMode(ledrouge, a.OUTPUT)
+a.pinMode(ledbleu, a.OUTPUT)
 
-def drive_forward(on_off):
-    pin8 = board.digital[8]
-    pin8.write(on_off)
-    pin7 = board.digital[7]
-    pin7.write(on_off)
+a.digitalWrite(trig, a.LOW)
+sleep(0.5)
+a.digitalWrite(trig, a.HIGH)
+sleep(0.00001)
+a.digitalWrite(trig, a.LOW)
+start = time()
 
-'''
-def drive_forward2(on_off):
-    pin8 = board.get_pin('d:8:p')
-    pin8.write(on_off)
-    pin7 = board.get_pin('d:7:p')
-    pin7.write(on_off)
-'''
+while a.digitalRead(echo) == 0:
+        start = time()
 
+while a.digitalRead(echo) == 1:
+        stop = time()
 
-def drive_backwards(on_off):
-    pin4 = board.digital[4]
-    pin4.write(on_off)
-    pin12 = board.digital[12]
-    pin12.write(on_off)
+elapsed = stop - start
 
+distance = elapsed * 34000
+distance = distance / 2
 
-def left_forward(on_off):
-    pin8 = board.digital[8]
-    pin8.write(on_off)
+# print "Distance : %.lf" % distance
 
+if distance < 4:
+        a.digitalWrite(ledrouge, a.HIGH)
+        a.digitalWrite(ledbleu, a.LOW)
+else:
+        a.digitalWrite(ledrouge, a.LOW)
+        a.digitalWrite(ledbleu, a.HIGH)
 
-def left_backwards(on_off):
-    pin4 = board.digital[4]
-    pin4.write(on_off)
+if distance >= 200 or distance <= 0:
+        print "Out of Range"
+else:
+        print "Distance : %.lf cm" % distance
 
-
-def right_forward(on_off):
-    pin7 = board.digital[7]
-    pin7.write(on_off)
-
-
-def right_backwards(on_off):
-    pin12 = board.digital[12]
-    pin12.write(on_off)
-
-
-def stop_car(on_off=0):
-    pin8 = board.digital[8]
-    pin8.write(on_off)
-    pin4 = board.digital[4]
-    pin4.write(on_off)
-    pin12 = board.digital[12]
-    pin12.write(on_off)
-    pin7 = board.digital[7]
-    pin7.write(on_off)
-
-
-def move():
-    while True:
-        drive_forward(1)
-        print('driving forward')
-        sleep(3)
-        drive_forward(0)
-        print('stopped')
-        sleep(1)
-
-
-if __main__ == '__main__':
-    move()
+sleep(0.05)
