@@ -3,37 +3,56 @@ __main__ = '__main__'
 
 import pyfirmata
 from pyfirmata import util
+import time
 from time import sleep
-from threading import Thread
 
-ANALOG_0 = 0
-ANALOG_1 = 1
-#distance_front = 1
-#distance_rear = 1
-#on_off = 0
 
 port = '/dev/tty.usbmodem1461'
 board = pyfirmata.Arduino(port, baudrate=57600)
+print(' .......connecting to Board.... stay tuned....')
+print('Board connected: %s' % str(board.get_firmata_version()))
+
+ANALOG_0 = 0
+ANALOG_1 = 1
+ANALOG_2 = 2
+TRIGGER = board.digital[11]
+stop = 0
+start = 0
+
+# start iterator as recommended per Pyfirmata recommendation
+it = util.Iterator(board)
+it.start()
 
 
+# This function measures a distance based on the HC-SR04 sensor
+def measure():
+    sleep(2)
 
-def distance_hcsr04():
+    board.analog[ANALOG_2].enable_reporting()
+    echo = board.analog[ANALOG_2].read()
+    global start
+    global stop
+    TRIGGER.write(0)
+    while echo == 0:
+        start = time.time()
+        print('Start time: %s' % start)
+
+    while echo == 1:
+        stop = time.time()
+        print('Stop time: %s' % stop)
+
+    elapsed = stop - start
+    distance = elapsed / 0.000058
+
+    return distance
+
+print(measure())
+quit()
+
+'''
+if __main__ == '__main__':
     while True:
-            board.analog[ANALOG_2].enable_reporting()
-            analog_value = board.analog[ANALOG_2].read()
-            # print "\n"
-            # print "Actual reading: " + str(analog_value)
-            if analog_value == None or analog_value == 0 or analog_value == 0.0:
-                analog_value = 1
-            # print "Calculated Reading: " + str(analog_value * 1024)
-            x = (3027.4 / (analog_value*1024))
-            global distance_front
-            distance_front = pow(x, 1.2134)
-            # return pow(x, 1.2134)
-            # print "============================================"
-            # print "Front distance is: " + str(analog_value)
-            # print "Calculated Front Distance:" + str(distance) + " cm"
-            # print "============================================"
-            print (str(distance_front))
-            sleep(1)
-
+        x = measure()
+        print('Measured distance: %s' % x)
+        sleep(3)
+'''
