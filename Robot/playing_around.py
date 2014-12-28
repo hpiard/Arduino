@@ -1,51 +1,42 @@
-from nanpy import ArduinoApi
-from nanpy import SerialManager
+__author__ = 'hpiard'
+__main__ = '__main__'
+
+import pyfirmata
+from pyfirmata import util
+import time
 from time import sleep
-from time import time
 
-connection = SerialManager()
-a = ArduinoApi(connection=connection)
 
-trig = 13
-echo = 12
-ledrouge = 11
-ledbleu = 10
+port = '/dev/tty.usbmodem1461'
+board = pyfirmata.Arduino(port, baudrate=57600)
+print(' .......connecting to Board.... stay tuned....')
+print('Board connected: %s' % str(board.get_firmata_version()))
 
-a.pinMode(trig, a.OUTPUT)
-a.pinMode(echo, a.INPUT)
-a.pinMode(ledrouge, a.OUTPUT)
-a.pinMode(ledbleu, a.OUTPUT)
+echo = board.get_pin('d:6:i')
+trigger = board.get_pin('d:9:o')
 
-a.digitalWrite(trig, a.LOW)
-sleep(0.5)
-a.digitalWrite(trig, a.HIGH)
-sleep(0.00001)
-a.digitalWrite(trig, a.LOW)
-start = time()
+it = util.Iterator(board)
+it.start()
 
-while a.digitalRead(echo) == 0:
-        start = time()
 
-while a.digitalRead(echo) == 1:
-        stop = time()
+echo.enable_reporting()
 
-elapsed = stop - start
+trigger.write(0)
+time.sleep(0.5)
+trigger.write(1)
+time.sleep(0.01)
+trigger.write(0)
+start = time.time()
+print(start)
+while echo.read() == 0:
+    nosig = time.time()
+    print(nosig)
 
-distance = elapsed * 34000
-distance = distance / 2
+while echo.read() == 1:
+    sig = time.time()
+    print(sig)
 
-# print "Distance : %.lf" % distance
+elapsed = sig - nosig
+distance = elapsed * 0.000058
 
-if distance < 4:
-        a.digitalWrite(ledrouge, a.HIGH)
-        a.digitalWrite(ledbleu, a.LOW)
-else:
-        a.digitalWrite(ledrouge, a.LOW)
-        a.digitalWrite(ledbleu, a.HIGH)
-
-if distance >= 200 or distance <= 0:
-        print "Out of Range"
-else:
-        print "Distance : %.lf cm" % distance
-
-sleep(0.05)
+print(distance)
