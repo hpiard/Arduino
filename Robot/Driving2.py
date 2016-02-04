@@ -8,69 +8,73 @@ from threading import Thread
 
 ANALOG_0 = 0
 ANALOG_1 = 1
-#distance_front = 1
-#distance_rear = 1
-#on_off = 0
+# distance_front = 1
+# distance_rear = 1
+# on_off = 0
 
-port = '/dev/tty.usbmodem1421'
-board = pyfirmata.Arduino(port)
+port = '/dev/tty.usbmodem1461'
+board = pyfirmata.Arduino(port, baudrate=57600)
+print(' .......connecting to Board.... stay tuned....')
+print('Board connected: %s' % str(board.get_firmata_version()))
+it = util.Iterator(board)
+it.start()
 
 
 def drive_forward(on_off):
-    pin9 = board.digital[9]
-    pin9.write(on_off)
-    pin3 = board.digital[3]
-    pin3.write(on_off)
+    pin8 = board.digital[8]
+    pin8.write(on_off)
+    pin7 = board.digital[7]
+    pin7.write(on_off)
 
 
 def drive_backwards(on_off):
-    pin6 = board.digital[6]
-    pin6.write(on_off)
-    pin5 = board.digital[5]
-    pin5.write(on_off)
+    pin4 = board.digital[4]
+    pin4.write(on_off)
+    pin12 = board.digital[12]
+    pin12.write(on_off)
 
 
 def left_forward(on_off):
-    pin9 = board.digital[9]
-    pin9.write(on_off)
+    pin8 = board.digital[8]
+    pin8.write(on_off)
 
 
 def left_backwards(on_off):
-    pin6 = board.digital[6]
-    pin6.write(on_off)
+    pin4 = board.digital[4]
+    pin4.write(on_off)
 
 
 def right_forward(on_off):
-    pin3 = board.digital[3]
-    pin3.write(on_off)
+    pin7 = board.digital[7]
+    pin7.write(on_off)
 
 
 def right_backwards(on_off):
-    pin5 = board.digital[5]
-    pin5.write(on_off)
+    pin12 = board.digital[12]
+    pin12.write(on_off)
 
 
-def stop_car(on_off):
-    pin9 = board.digital[9]
-    pin9.write(on_off)
-    pin6 = board.digital[6]
-    pin6.write(on_off)
-    pin5 = board.digital[5]
-    pin5.write(on_off)
-    pin3 = board.digital[3]
-    pin3.write(on_off)
+def stop_car(on_off=0):
+    pin8 = board.digital[8]
+    pin8.write(on_off)
+    pin4 = board.digital[4]
+    pin4.write(on_off)
+    pin12 = board.digital[12]
+    pin12.write(on_off)
+    pin7 = board.digital[7]
+    pin7.write(on_off)
 
 
 def front_distance():
-    it = util.Iterator(board)
-    it.start()
+    # it = util.Iterator(board)
+    # it.start()
     board.analog[ANALOG_0].enable_reporting()
     analog_value = board.analog[ANALOG_0].read()
     if analog_value == None or analog_value == 0 or analog_value == 0.0:
         analog_value = 1
     x = (3027.4 / (analog_value*1024))
-    distance_front = pow(x, 1.2134)
-    #print (str(distance_front))
+    distance_front = pow(x, 1.244)
+    # print (str(distance_front))
     return distance_front
 
 '''
@@ -82,22 +86,28 @@ def rear_distance():
     if analog_value == None or analog_value == 0 or analog_value == 0.0:
         analog_value = 1
     y = (3027.4 / (analog_value*1024))
-    distance_rear = pow(y, 1.2134)
-    #print (str(distance_rear))
+    distance_rear = pow(y, 1.244)
+    # print (str(distance_rear))
     return distance_rear
 '''
 
 
 def driving():
+    iteration = 0
     while True:
         space_front = front_distance()
+        iteration += 1
+        print(iteration)
         print(space_front)
-        #space_rear = rear_distance()
-        if space_front >= 10.0:
+        # space_rear = rear_distance()
+        if space_front >= 30.0:
             drive_forward(1)
         else:
             drive_forward(0)
-        sleep(1)
+        board.pass_time(1)
 
 if __main__ == '__main__':
-    driving()
+    # it = util.Iterator(board)
+    # it.start()
+    while True:
+        driving()
